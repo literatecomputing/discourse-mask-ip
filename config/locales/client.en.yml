@@ -3,7 +3,7 @@ en:
     admin:
       site_settings:
         categories:
-          TODO_plugin_name: "Plugin Name"
+          mask_ip: "Mask IP"
   js:
-    discourse_plugin_name:
+    discourse_mask_ip:
       placeholder: placeholder

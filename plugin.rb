@@ -1,21 +1,26 @@
 # frozen_string_literal: true
 
-# name: discourse-plugin-name
-# about: TODO
+# name: discourse-mask-ip
+# about: mask ip_address and registration_ip_address
 # meta_topic_id: TODO
 # version: 0.0.1
-# authors: Discourse
+# authors: Jay Pfaffman
 # url: TODO
 # required_version: 2.7.0
 
-enabled_site_setting :plugin_name_enabled
+enabled_site_setting :mask_ip_enabled
 
-module ::MyPluginModule
-  PLUGIN_NAME = "discourse-plugin-name"
+module ::MaskIpModule
+  PLUGIN_NAME = "discourse_mask_ip"
+  MASK_ADDRESS = "255.255.255.255"
 end
 
-require_relative "lib/my_plugin_module/engine"
+require_relative "lib/mask_ip_module/engine"
+require_relative "lib/mask_ip_module/override_user"
 
 after_initialize do
-  # Code which should run after Rails has finished booting
+  reloadable_patch do |plugin|
+    User.class_eval { prepend MaskIpModule::UserExtension}
+  end
+  
 end
